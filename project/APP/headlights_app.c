@@ -48,10 +48,7 @@ void HEADLIGHTS_voidMainFunction(void)
 	{
 		diff = -diff;
 	}
-	else
-	{
-		
-	}
+	
 
 	if((LastLightPercentage == 0xFF) || (diff > HEADLIGHTS_HYSTERESIS_MARGIN))
 	{
