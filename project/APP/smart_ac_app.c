@@ -1,7 +1,9 @@
 //Author: Nour amr
 #include "../MCAL/DIO/dio.h"
 #include "../LIB/std_types.h"
-#include "../MCAL/Timer0_PWM/timer0_pwm.h"
+#include "../MCAL/Timer0/TIMER0_int.h"
+#include "../MCAL/Timer0/TIMER0_config.h"
+#include "../MCAL/Timer0/TIMER0_private.h"
 #include "../HAL/LM35/lm35.h"
 #include "smart_ac_app.h"
 typedef enum { AC_OFF, AC_MEDIUM, AC_HIGH } ac_state_t;
