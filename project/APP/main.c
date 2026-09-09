@@ -2,32 +2,55 @@
  * main.c
  *
  * Smart Car - Application Entry Point
- */ 
+ */
 
 #define F_CPU 8000000UL
+
 #include <util/delay.h>
 
 #include "../LIB/Std_Types.h"
+#include "../LIB/bit_math.h"
 #include "../MCAL/DIO/DIO_int.h"
+
 #include "headlights_app.h"
 #include "smart_ac_app.h"
+#include "garage_app.h"
 
-/* TODO (team): call the Init/MainFunction of garage_app, movement_app,
- * and smart_ac_app here as well once each teammate finishes their part. */
+
+/* SREG Register */
+#define SREG *((volatile u8 *)0x5F)
+
+/* Global Interrupt Enable bit */
+#define I 7
+
 
 int main(void)
 {
-	DIO_voidInitialization();
+    /* Initialize DIO */
+    DIO_voidInitialization();
+
+    /* Initialize Applications */
     SmartAC_voidInit();
-	HEADLIGHTS_voidInit();
+    HEADLIGHTS_voidInit();
+    Garage_init();
 
-	while(1)
-	{
-		SmartAC_voidUpdate();
+    /* Enable Global Interrupts for Timer1 ICU */
+    SET_BIT(SREG, I);
 
-		HEADLIGHTS_voidMainFunction();
-		_delay_ms(100);
-	}
+    while (1)
+    {
+        /* Smart AC */
+        SmartAC_voidUpdate();
 
-	return 0;
+        /* Headlights */
+        HEADLIGHTS_voidMainFunction();
+
+        /* Garage */
+        Garage_update();
+
+        /* Delay between application updates */
+        _delay_ms(100);
+    }
+
+    return 0;
 }
