@@ -27,9 +27,11 @@ void TIMER0_voidInit(void)
         /* Fast PWM mode : WGM01 = 1 , WGM00 = 1 */
         Set_Bit(TCCR0, 6);   /* WGM00 */
         Set_Bit(TCCR0, 3);   /* WGM01 */
-
-        /* Non-inverting mode : COM01 = 1 , COM00 = 0
-         * -> OC0 cleared on compare match, set at TOP (higher OCR0 = more ON time) */
+        /* Fast PWM, non-inverting mode:
+         * COM01 = 1, COM00 = 0
+         * OC0 is cleared on compare match and set at BOTTOM.
+         * Higher OCR0 value -> higher duty cycle.
+         */
         Set_Bit(TCCR0, 5);   /* COM01 */
         Clear_Bit(TCCR0, 4); /* COM00 */
 
