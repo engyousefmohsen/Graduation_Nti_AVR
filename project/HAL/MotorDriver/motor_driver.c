@@ -5,7 +5,8 @@
  * Author : Zain
  */ 
 #include "motor_driver.h"
-#include "../../LIB/std_types.h"
+
+static u16 current_speed = 0;
 
 void motor_init(u8 port) 
 {
@@ -33,6 +34,22 @@ void motor_stop(u8 port)
 	DIO_voidSetPinValue(port, PIN2, LOW);
 	DIO_voidSetPinValue(port, PIN3, LOW);
 	
+	current_speed = 0;
+	Timer1_PWM_setDuty(0);
+}
+
+
+// initialize timer1 before using any of these functions
+
+void motor_increaseSpeed()
+{
+	if ((current_speed + SPEED_STEP) <= MAX_SPEED)
+	{
+		current_speed += SPEED_STEP;
+	} else {
+		current_speed = MAX_SPEED;
+	}
+	Timer1_PWM_setDuty(current_speed);
 }
 
 void motor_moveForward(u8 port)
@@ -41,6 +58,8 @@ void motor_moveForward(u8 port)
 	DIO_voidSetPinValue(port, PIN1, LOW);
 	DIO_voidSetPinValue(port, PIN2, HIGH);
 	DIO_voidSetPinValue(port, PIN3, LOW);
+	
+	motor_increaseSpeed();
 }
 
 void motor_moveBackward(u8 port)
@@ -49,6 +68,8 @@ void motor_moveBackward(u8 port)
 	DIO_voidSetPinValue(port, PIN1, HIGH);
 	DIO_voidSetPinValue(port, PIN2, LOW);
 	DIO_voidSetPinValue(port, PIN3, HIGH);
+	
+	motor_increaseSpeed();
 }
 
 void motor_turnRight(u8 port)
@@ -57,6 +78,8 @@ void motor_turnRight(u8 port)
 	DIO_voidSetPinValue(port, PIN1, LOW);
 	DIO_voidSetPinValue(port, PIN2, LOW);
 	DIO_voidSetPinValue(port, PIN3, HIGH);
+	
+	motor_increaseSpeed();
 }
 
 void motor_turnLeft(u8 port)
@@ -65,4 +88,6 @@ void motor_turnLeft(u8 port)
 	DIO_voidSetPinValue(port, PIN1, HIGH);
 	DIO_voidSetPinValue(port, PIN2, HIGH);
 	DIO_voidSetPinValue(port, PIN3, LOW);
+	
+	motor_increaseSpeed();
 }
