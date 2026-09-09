@@ -1,3 +1,4 @@
+//Author: Nour amr
 #include "../../MCAL/ADC/ADC_Interface.h"
 #include"../../LIB/std_types.h"
 #include "lm35.h"
