@@ -1,15 +1,41 @@
 //Author: Nour amr
-#include "../../MCAL/ADC/ADC_Interface.h"
-#include"../../LIB/std_types.h"
-#include "lm35.h"
-void lm35_init(void) {
-    //it just need adc initialization which is done so it is here for structure only
+#include "../MCAL/DIO/dio.h"
+#include "../LIB/std_types.h"
+#include "../MCAL/Timer0_PWM/timer0_pwm.h"
+#include "../HAL/LM35/lm35.h"
+#include "smart_ac_app.h"
+typedef enum { AC_OFF, AC_MEDIUM, AC_HIGH } ac_state_t;
+static ac_state_t current_state = AC_OFF;
+
+void SmartAC_voidInit(void) {
+    Timer0_voidInit();
+    lm35_init();
 }
 
+void SmartAC_voidUpdate(void) {
+    f32 temp = lm35_read_temp();
 
-f32 lm35_read_temp(void) {
-    u16 adc_value = ADC_Read(LM35_CHANNEL);
-    f32 voltage = (adc_value * VREF_MV) / ADC_RESOLUTION;
-    f32 temp_c = voltage / LM35_MV_PER_C;
-    return temp_c;
+    switch (current_state) {
+        case AC_OFF:
+            if (temp >= TEMP_LOW_ON) current_state = AC_MEDIUM;
+            break;
+        case AC_MEDIUM:
+            if (temp >= TEMP_HIGH_ON) current_state = AC_HIGH;
+
+            else if(temp < TEMP_LOW_OFF)  current_state = AC_OFF;
+
+            break;
+
+        case AC_HIGH:
+            if (temp < TEMP_HIGH_OFF) current_state = AC_MEDIUM;
+            break;
+    }
+
+    u8 duty;
+    switch (current_state) {
+        case AC_OFF:    duty = FAN_SPEED_OFF;    break;
+        case AC_MEDIUM: duty = FAN_SPEED_MEDIUM; break;
+        case AC_HIGH:   duty = FAN_SPEED_HIGH;   break;
+    }
+    Timer0_voidSetPWM(duty);
 }
