@@ -64,8 +64,5 @@ void HEADLIGHTS_voidMainFunction(void)
 		/* 4) Remember the last acted-upon value */
 		LastLightPercentage = lightPercentage;
 	}
-	else
-	{
-		
-	}
+	
 }
