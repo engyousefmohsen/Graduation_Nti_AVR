@@ -8,7 +8,7 @@
 #ifndef MOTORS_H
 #define MOTORS_H
 
-#include "../../MCAL/DIO/dio.h"
+#include "../../MCAL/DIO/DIO_int.h"
 #include "../../LIB/std_types.h"
 #include "../../MCAL/Timer1_PWM_ICU/timer1.h"
 
