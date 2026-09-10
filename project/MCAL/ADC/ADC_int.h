@@ -1,3 +1,6 @@
+#include "../../LIB/Std_Types.h"
+#include "../../LIB/Bit_Math.h"
+
 #ifndef ADC_int_h
 #define ADC_int_h
 

@@ -10,19 +10,19 @@
 void ADC_voidInit(void)
 {
     /* AVCC as voltage reference */
-    Clear_Bit(ADMUX, REFS1);
-    Set_Bit(ADMUX, REFS0);
+    CLR_BIT(ADMUX, REFS1);
+    SET_BIT(ADMUX, REFS0);
 
     /* Right adjustment */
-    Clear_Bit(ADMUX, ADLAR);
+    CLR_BIT(ADMUX, ADLAR);
 
     /* ADC Prescaler = 64 */
-    Set_Bit(ADCSRA, ADPS2);
-    Set_Bit(ADCSRA, ADPS1);
-    Clear_Bit(ADCSRA, ADPS0);
+    SET_BIT	(ADCSRA, ADPS2);
+    SET_BIT	(ADCSRA, ADPS1);
+    CLR_BIT(ADCSRA, ADPS0);
 
     /* Enable ADC */
-    Set_Bit(ADCSRA, ADEN);
+    SET_BIT(ADCSRA, ADEN);
 }
 
 u16 ADC_u16Read(u8 Channel)
@@ -31,9 +31,9 @@ u16 ADC_u16Read(u8 Channel)
 
     ADMUX |= (Channel & 0x07);
 
-    Set_Bit(ADCSRA, ADSC);
+    SET_BIT(ADCSRA, ADSC);
 
-    while (Get_Bit(ADCSRA, ADSC) == 1);
+    while (GET_BIT(ADCSRA, ADSC) == 1);
 
     u16 low_byte = ADCL;
     u16 high_byte = ADCH;
