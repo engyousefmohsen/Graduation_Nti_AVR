@@ -20,5 +20,7 @@ typedef signed long int s32;
 typedef float f32;
 typedef double f64;
 
+#define NULL_PTR ((void*)0)
+
 
 #endif /* STD_TYPES_H_ */
