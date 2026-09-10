@@ -1,4 +1,3 @@
-
 /*
  * keypad.c
  * Author: Abdelrahman Elbokhary
@@ -7,7 +6,7 @@
 
 #include "keypad.h"
 
-/* Keypad matrix mapping */
+/* Keypad matrix mapping matching the exact Proteus layout */
 static const u8 Keypad_Matrix[4][4] = {
     {'7', '8', '9', '/'},
     {'4', '5', '6', '*'},
