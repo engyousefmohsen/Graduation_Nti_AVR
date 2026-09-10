@@ -6,7 +6,7 @@
  */
 
 #include "UART.h"
-#include "../MCAL/DIO_int.h"
+#include "../DIO/DIO_int.h"
 #include "../../LIB/bit_math.h"
 #include "../../LIB/std_types.h"
 
