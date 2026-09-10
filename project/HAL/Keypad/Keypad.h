@@ -1,4 +1,3 @@
-
 /*
  * keypad.h
  * Author: Abdelrahman Elbokhary
@@ -11,7 +10,7 @@
 #define F_CPU 8000000UL
 #include <avr/io.h>
 #include <util/delay.h>
-#include "../../LIB/std_types.h" 
+#include "../../LIB/std_types.h"
 
 /* Keypad Port Configuration on PORTC */
 #define KEYPAD_PORT_DIR   DDRC
