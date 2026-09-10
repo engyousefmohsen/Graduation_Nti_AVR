@@ -1,5 +1,8 @@
 //Author: Nour amr
-#include "../MCAL/DIO/dio.h"
+#include "../MCAL/DIO/DIO_int.h"
+#include "../MCAL/DIO/DIO_private.h"
+#include "../MCAL/DIO/DIO_config.h"
+
 #include "../LIB/std_types.h"
 #include "../MCAL/Timer0/TIMER0_int.h"
 #include "../MCAL/Timer0/TIMER0_config.h"
@@ -10,7 +13,7 @@ typedef enum { AC_OFF, AC_MEDIUM, AC_HIGH } ac_state_t;
 static ac_state_t current_state = AC_OFF;
 
 void SmartAC_voidInit(void) {
-    Timer0_voidInit();
+    TIMER0_voidInit();
     lm35_init();
 }
 
